@@ -25,11 +25,11 @@ import java.util.List;
  * @version August 18, 2022
  */
 public class Pathfinder {
-    private static Vector3 tmpVec = new Vector3();
-    private final SoloNavMeshBuilder soloNavMeshBuilder = new SoloNavMeshBuilder();
-    private final TileNavMeshBuilder tileNavMeshBuilder = new TileNavMeshBuilder();
-    private NavMeshData navMeshData;
-    public NavMeshTool navMeshTool;
+    protected static Vector3 tmpVec = new Vector3();
+    protected final SoloNavMeshBuilder soloNavMeshBuilder = new SoloNavMeshBuilder();
+    protected final TileNavMeshBuilder tileNavMeshBuilder = new TileNavMeshBuilder();
+    protected NavMeshData navMeshData;
+    private NavMeshTool tool;
 
     public Pathfinder(FileHandle objModel, NavigationSettings navigationSettings) {
         this(objModel.read(), navigationSettings);
@@ -67,7 +67,7 @@ public class Pathfinder {
         init(geom, navigationSettings);
     }
 
-    private int getVerticesIndicesFromModel(ModelInstance modelInstance, Array<Float> vertOut, Array<Integer> indexOut, int indicesOffset) {
+    private static int getVerticesIndicesFromModel(ModelInstance modelInstance, Array<Float> vertOut, Array<Integer> indexOut, int indicesOffset) {
         for (Mesh mesh : modelInstance.model.meshes) {
             VertexAttributes vertexAttributes = mesh.getVertexAttributes();
             int offset = vertexAttributes.getOffset(VertexAttributes.Usage.Position);
@@ -126,7 +126,7 @@ public class Pathfinder {
         }
 
         navMeshData.update(navMeshData.getInputGeom(), buildResult.first, buildResult.second);
-        navMeshTool = new NavMeshTool(navMeshData);
+        tool = new NavMeshTool(navMeshData);
     }
 
     public NavMesh getNavMesh() {
@@ -142,7 +142,7 @@ public class Pathfinder {
      */
     public void getPath(Vector3 start, Vector3 end, Array<float[]> pathOut) {
         pathOut.clear();
-        navMeshTool.setPositions(start, end);
-        navMeshTool.recalculate(pathOut);
+        tool.setPositions(start, end);
+        tool.recalculate(pathOut);
     }
 }

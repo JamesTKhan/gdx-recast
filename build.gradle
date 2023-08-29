@@ -86,6 +86,7 @@ dependencies {
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
     api "org.recast4j:recast:$recast4jVersion"
     api "org.recast4j:detour:$recast4jVersion"
+    api "org.recast4j:detour-crowd:$recast4jVersion"
 
     testImplementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"

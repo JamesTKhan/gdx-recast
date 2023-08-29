@@ -25,7 +25,7 @@ import static org.recast4j.detour.DetourCommon.vMad;
  * @author James Pooley
  * @version June 20, 2022
  */
-public class NavMeshTool {
+public class NavMeshTool implements Tool {
     private final DefaultQueryFilter queryFilter;
     private final NavMeshData navMeshData;
 
@@ -176,5 +176,10 @@ public class NavMeshTool {
                 Gdx.app.debug(this.getClass().getSimpleName(), "Max path iterations reached.");
             }
         }
+    }
+
+    @Override
+    public NavMesh getNavMesh() {
+        return navMeshData.getNavMesh();
     }
 }

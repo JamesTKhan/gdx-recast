@@ -13,6 +13,7 @@ import org.recast4j.detour.Poly;
 import org.recast4j.detour.PolyDetail;
 import org.recast4j.detour.Result;
 import org.recast4j.detour.Tupple2;
+import org.recast4j.detour.crowd.CrowdAgent;
 
 /**
  * @author JamesTKhan
@@ -128,6 +129,16 @@ public class DebugDraw {
                             tile.data.verts[p.verts[j + k] * 3 + 2]);
                 }
             }
+        }
+    }
+
+    public void drawCrowdAgents(Array<CrowdAgent> crowdAgents) {
+        shapeRenderer.setColor(Color.FOREST);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+        for (CrowdAgent agent : crowdAgents) {
+            //shapeRenderer.circle(agent.npos[0], agent.npos[1], agent.npos[2], agent.params.radius);
+            float radius = agent.params.radius;
+            shapeRenderer.box(agent.npos[0], agent.npos[1], agent.npos[2], radius, radius, radius);
         }
     }
 
