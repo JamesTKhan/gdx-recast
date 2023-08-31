@@ -18,9 +18,6 @@ freely, subject to the following restrictions:
 
 package com.github.jamestkhan.recast.builders;
 
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicLong;
-
 public class RecastBuilderThreadFactory {
 
 //    private final AtomicLong count = new AtomicLong();

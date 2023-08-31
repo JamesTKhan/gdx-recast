@@ -72,7 +72,8 @@ public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
                 true, settings.detailSampleDistance, settings.detailSampleMaxError, SampleAreaModifications.SAMPLE_AREAMOD_WALKABLE);
 
         RecastBuilder rcBuilder = new RecastBuilder();
-        return rcBuilder.buildTiles(m_geom, cfg, Optional.empty());
+        return rcBuilder.buildTiles(m_geom, cfg, Optional.empty()); // GWT version Antz
+        //return rcBuilder.buildTiles(m_geom, cfg, Optional.of(executor));
     }
 
     private NavMesh buildNavMesh(GdxInputGeomProvider geom, List<MeshData> meshData, float cellSize, int tileSize,
