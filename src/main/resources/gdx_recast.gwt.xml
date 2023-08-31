@@ -12,5 +12,9 @@
     <super-source path="com/github/jamestkhan/emu" />
 
     <source path="com/github/jamestkhan/recast"/>
+
+    <inherits name="recast4j_detour" />
+    <inherits name="recast4j_detour_crowd" />
+    <inherits name="recast4j_recast" />
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 </module>
