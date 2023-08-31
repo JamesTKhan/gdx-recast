@@ -34,16 +34,15 @@ import org.recast4j.recast.RecastConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
 
-    private final ExecutorService executor;
+    //TODO we need this back for desktop
+//    private final ExecutorService executor;
 
     public TileNavMeshBuilder() {
-        executor = Executors.newFixedThreadPool(Math.max(1, Runtime.getRuntime().availableProcessors() / 2),
-                new RecastBuilderThreadFactory());
+//        executor = Executors.newFixedThreadPool(Math.max(1, Runtime.getRuntime().availableProcessors() / 2),
+//                new RecastBuilderThreadFactory());
     }
 
     public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavigationSettings navigationSettings) {
@@ -66,7 +65,7 @@ public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
                 true, settings.detailSampleDistance, settings.detailSampleMaxError, SampleAreaModifications.SAMPLE_AREAMOD_WALKABLE);
 
         RecastBuilder rcBuilder = new RecastBuilder();
-        return rcBuilder.buildTiles(m_geom, cfg, Optional.of(executor));
+        return rcBuilder.buildTiles(m_geom, cfg, Optional.empty());
     }
 
     private NavMesh buildNavMesh(GdxInputGeomProvider geom, List<MeshData> meshData, float cellSize, int tileSize,

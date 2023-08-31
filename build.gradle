@@ -84,9 +84,17 @@ repositories {
 dependencies {
 // Change gdxVersion in gradle.properties to update or downgrade.
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
-    api "org.recast4j:recast:$recast4jVersion"
-    api "org.recast4j:detour:$recast4jVersion"
-    api "org.recast4j:detour-crowd:$recast4jVersion"
+//    api "org.recast4j:recast:$recast4jVersion"
+//    api "org.recast4j:detour:$recast4jVersion"
+//    api "org.recast4j:detour-crowd:$recast4jVersion"
+//
+    api "com.github.antzGames.gwt-recast4j:recast:$gwtRecast4jVersion"
+    api "com.github.antzGames.gwt-recast4j:detour:$gwtRecast4jVersion"
+    api "com.github.antzGames.gwt-recast4j:detour-crowd:$gwtRecast4jVersion"
+
+    api "com.github.antzGames.gwt-recast4j:recast:$gwtRecast4jVersion:sources"
+    api "com.github.antzGames.gwt-recast4j:detour:$gwtRecast4jVersion:sources"
+    api "com.github.antzGames.gwt-recast4j:detour-crowd:$gwtRecast4jVersion:sources"
 
     testImplementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
