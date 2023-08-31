@@ -8,6 +8,9 @@
 
   -->
 <module>
+    <!-- For super sourcing (swapping classes) for GWT -->
+    <super-source path="com/github/jamestkhan/emu" />
+
     <source path="com/github/jamestkhan/recast"/>
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 </module>

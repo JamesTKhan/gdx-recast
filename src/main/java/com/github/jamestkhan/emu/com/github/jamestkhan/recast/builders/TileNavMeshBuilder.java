@@ -20,7 +20,10 @@ package com.github.jamestkhan.recast.builders;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.github.jamestkhan.recast.NavigationSettings;
+import com.github.jamestkhan.recast.builders.AbstractNavMeshBuilder;
+import com.github.jamestkhan.recast.builders.SampleAreaModifications;
 import com.github.jamestkhan.recast.geom.GdxInputGeomProvider;
+
 import org.recast4j.detour.DetourCommon;
 import org.recast4j.detour.MeshData;
 import org.recast4j.detour.NavMesh;
@@ -36,19 +39,17 @@ import org.recast4j.recast.RecastConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
 
-    private final ExecutorService executor;
+    // This is the GWT version
+//    private final ExecutorService executor;
 
     public TileNavMeshBuilder() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
-        Gdx.app.log("DESKTOP", "Using Desktop version of TileNavMeshBuilder");
-
-        executor = Executors.newFixedThreadPool(Math.max(1, Runtime.getRuntime().availableProcessors() / 2),
-                new RecastBuilderThreadFactory());
+        Gdx.app.log("GWT", "Using GWT version of TileNavMeshBuilder");
+//        executor = Executors.newFixedThreadPool(Math.max(1, Runtime.getRuntime().availableProcessors() / 2),
+//                new RecastBuilderThreadFactory());
     }
 
     public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavigationSettings navigationSettings) {
@@ -71,8 +72,7 @@ public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
                 true, settings.detailSampleDistance, settings.detailSampleMaxError, SampleAreaModifications.SAMPLE_AREAMOD_WALKABLE);
 
         RecastBuilder rcBuilder = new RecastBuilder();
-        //return rcBuilder.buildTiles(m_geom, cfg, Optional.empty());
-        return rcBuilder.buildTiles(m_geom, cfg, Optional.of(executor)); // Desktop version Antz
+        return rcBuilder.buildTiles(m_geom, cfg, Optional.empty());
     }
 
     private NavMesh buildNavMesh(GdxInputGeomProvider geom, List<MeshData> meshData, float cellSize, int tileSize,

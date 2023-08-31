@@ -56,6 +56,12 @@ if(JavaVersion.current().isJava9Compatible()) {
     }
 }
 
+// **** This is needed for super-sourcing, i.e. for GWT compatibility **** Antz
+apply plugin: 'idea'
+idea.module.excludeDirs += [file("src/main/java/com/github/jamestkhan/emu/")]
+[compileJava, compileTestJava, javadoc]*.exclude("com/github/jamestkhan/emu")
+
+
 // JavaDocs will be published inside the docs/ folder, which you can easily put on GitHub Pages in your repo settings.
 // You may instead want to remove this line if frequent doc changes use up too much repo space.
 javadoc.destinationDir = file('docs/apidocs')
