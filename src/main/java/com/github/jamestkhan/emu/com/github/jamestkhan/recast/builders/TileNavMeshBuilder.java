@@ -19,7 +19,7 @@ package com.github.jamestkhan.recast.builders;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.github.jamestkhan.recast.NavigationSettings;
+import com.github.jamestkhan.recast.NavMeshGenSettings;
 import com.github.jamestkhan.recast.builders.AbstractNavMeshBuilder;
 import com.github.jamestkhan.recast.builders.SampleAreaModifications;
 import com.github.jamestkhan.recast.geom.GdxInputGeomProvider;
@@ -52,16 +52,16 @@ public class TileNavMeshBuilder extends AbstractNavMeshBuilder {
 //                new RecastBuilderThreadFactory());
     }
 
-    public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavigationSettings navigationSettings) {
+    public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavMeshGenSettings genSettings) {
 
-        List<RecastBuilderResult> rcResult = buildRecastResult(m_geom, navigationSettings, true, true, true);
+        List<RecastBuilderResult> rcResult = buildRecastResult(m_geom, genSettings, true, true, true);
         return new Tupple2<>(rcResult,
                 buildNavMesh(m_geom,
-                        buildMeshData(m_geom, navigationSettings.cellSize, navigationSettings.cellHeight, navigationSettings.agentHeight, navigationSettings.agentRadius, navigationSettings.agentMaxClimb, rcResult),
-                        navigationSettings.cellSize, navigationSettings.tileSizeX, navigationSettings.maxVertsPerPoly));
+                        buildMeshData(m_geom, genSettings.cellSize, genSettings.cellHeight, genSettings.agentHeight, genSettings.agentRadius, genSettings.agentMaxClimb, rcResult),
+                        genSettings.cellSize, genSettings.tileSizeX, genSettings.maxVertsPerPoly));
     }
 
-    private List<RecastBuilderResult> buildRecastResult(GdxInputGeomProvider m_geom, NavigationSettings settings, boolean filterLowHangingObstacles, boolean filterLedgeSpans,
+    private List<RecastBuilderResult> buildRecastResult(GdxInputGeomProvider m_geom, NavMeshGenSettings settings, boolean filterLowHangingObstacles, boolean filterLedgeSpans,
                                                         boolean filterWalkableLowHeightSpans) {
 
         RecastConfig cfg = new RecastConfig(settings.useTiles, settings.tileSizeX, settings.tileSizeZ, RecastConfig.calcBorder(settings.agentRadius, settings.cellSize),
