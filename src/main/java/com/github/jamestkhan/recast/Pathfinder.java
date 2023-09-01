@@ -129,10 +129,18 @@ public class Pathfinder {
         tool = new NavMeshTool(navMeshData);
     }
 
+    /**
+     * Get the current NavMesh
+     * @return the current navmesh
+     */
     public NavMesh getNavMesh() {
         return navMeshData.getNavMesh();
     }
 
+    /**
+     * Set the current NavMesh
+     * @param navMesh the navmesh to set
+     */
     public void setNavMesh(NavMesh navMesh) {
         navMeshData.update(navMeshData.getInputGeom(), null, navMesh);
     }
