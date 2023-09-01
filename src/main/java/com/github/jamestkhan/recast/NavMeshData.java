@@ -18,33 +18,20 @@ freely, subject to the following restrictions:
 */
 package com.github.jamestkhan.recast;
 
-import com.github.jamestkhan.recast.geom.GdxInputGeomProvider;
 import org.recast4j.detour.NavMesh;
 import org.recast4j.detour.NavMeshQuery;
-import org.recast4j.recast.RecastBuilder.RecastBuilderResult;
-
-import java.util.List;
 
 public class NavMeshData {
-
-    private GdxInputGeomProvider inputGeom;
     private NavMesh navMesh;
     private NavMeshQuery navMeshQuery;
-    private NavigationSettings settings;
 
-    public NavMeshData(GdxInputGeomProvider inputGeom, NavMesh navMesh, NavigationSettings settings) {
-        this.inputGeom = inputGeom;
+    public NavMeshData(NavMesh navMesh) {
         this.navMesh = navMesh;
-        this.settings = settings;
         setQuery(navMesh);
     }
 
     private void setQuery(NavMesh navMesh) {
         navMeshQuery = navMesh != null ? new NavMeshQuery(navMesh) : null;
-    }
-
-    public GdxInputGeomProvider getInputGeom() {
-        return inputGeom;
     }
 
     public NavMesh getNavMesh() {
@@ -55,12 +42,7 @@ public class NavMeshData {
         return navMeshQuery;
     }
 
-    public NavigationSettings getSettings() {
-        return settings;
-    }
-
-    public void update(GdxInputGeomProvider geom, List<RecastBuilderResult> recastResults, NavMesh navMesh) {
-        inputGeom = geom;
+    public void update(NavMesh navMesh) {
         this.navMesh = navMesh;
         setQuery(navMesh);
     }

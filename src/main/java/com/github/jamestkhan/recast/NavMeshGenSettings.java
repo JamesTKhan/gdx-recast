@@ -3,12 +3,18 @@ package com.github.jamestkhan.recast;
 import org.recast4j.recast.RecastConstants;
 
 /**
- * Settings object for configuring Recast
+ * Settings object for generating a NavMesh.
+ * Ex.
+ * NavMeshGenSettings settings = NavMeshGenSettings.Builder.SettingsBuilder()
+ *         .agentRadius(1.0f)
+ *         .agentHeight(2.0f)
+ *         .agentMaxClimb(2.50f)
+ *         .build();
  *
  * @author JamesTKhan
  * @version August 20, 2022
  */
-public class NavigationSettings {
+public class NavMeshGenSettings {
     public RecastConstants.PartitionType partitionType;
 
     public boolean useTiles;
@@ -58,13 +64,7 @@ public class NavigationSettings {
     /** The maximum distance the detail mesh surface should deviate from heightfield data. (For height detail only.) [Limit: >=0] [Units: wu] */
     public float detailSampleMaxError;
 
-    /** How many "steps" to take when path finding, the higher this is the less calculations needed */
-    public float stepSize;
-
-    /** How many iterations should we try for generating a path before giving up? */
-    public int maxIterations;
-
-    private NavigationSettings() {
+    private NavMeshGenSettings() {
 
     }
 
@@ -86,8 +86,6 @@ public class NavigationSettings {
         private int maxVertsPerPoly;
         private float detailSampleDistance;
         private float detailSampleMaxError;
-        private float stepSize;
-        private int maxIterations;
 
         private Builder() {
             // Set default values
@@ -108,8 +106,6 @@ public class NavigationSettings {
             maxVertsPerPoly = 6;
             detailSampleDistance = 6f;
             detailSampleMaxError = 1f;
-            stepSize = 1f;
-            maxIterations = 1024;
         }
 
         public static Builder SettingsBuilder() {
@@ -201,38 +197,26 @@ public class NavigationSettings {
             return this;
         }
 
-        public Builder stepSize(float stepSize) {
-            this.stepSize = stepSize;
-            return this;
-        }
-
-        public Builder setMaxIterations(int iterations) {
-            this.maxIterations = iterations;
-            return this;
-        }
-
-        public NavigationSettings build() {
-            NavigationSettings navigationSettings = new NavigationSettings();
-            navigationSettings.agentMaxClimb = this.agentMaxClimb;
-            navigationSettings.useTiles = this.useTiles;
-            navigationSettings.detailSampleDistance = this.detailSampleDistance;
-            navigationSettings.agentHeight = this.agentHeight;
-            navigationSettings.regionMergeSize = this.regionMergeSize;
-            navigationSettings.cellHeight = this.cellHeight;
-            navigationSettings.maxVertsPerPoly = this.maxVertsPerPoly;
-            navigationSettings.tileSizeZ = this.tileSizeZ;
-            navigationSettings.maxEdgeLength = this.maxEdgeLength;
-            navigationSettings.agentRadius = this.agentRadius;
-            navigationSettings.regionMinSize = this.regionMinSize;
-            navigationSettings.maxEdgeError = this.maxEdgeError;
-            navigationSettings.cellSize = this.cellSize;
-            navigationSettings.partitionType = this.partitionType;
-            navigationSettings.agentMaxSlope = this.agentMaxSlope;
-            navigationSettings.detailSampleMaxError = this.detailSampleMaxError;
-            navigationSettings.tileSizeX = this.tileSizeX;
-            navigationSettings.stepSize = this.stepSize;
-            navigationSettings.maxIterations = this.maxIterations;
-            return navigationSettings;
+        public NavMeshGenSettings build() {
+            NavMeshGenSettings navMeshGenSettings = new NavMeshGenSettings();
+            navMeshGenSettings.agentMaxClimb = this.agentMaxClimb;
+            navMeshGenSettings.useTiles = this.useTiles;
+            navMeshGenSettings.detailSampleDistance = this.detailSampleDistance;
+            navMeshGenSettings.agentHeight = this.agentHeight;
+            navMeshGenSettings.regionMergeSize = this.regionMergeSize;
+            navMeshGenSettings.cellHeight = this.cellHeight;
+            navMeshGenSettings.maxVertsPerPoly = this.maxVertsPerPoly;
+            navMeshGenSettings.tileSizeZ = this.tileSizeZ;
+            navMeshGenSettings.maxEdgeLength = this.maxEdgeLength;
+            navMeshGenSettings.agentRadius = this.agentRadius;
+            navMeshGenSettings.regionMinSize = this.regionMinSize;
+            navMeshGenSettings.maxEdgeError = this.maxEdgeError;
+            navMeshGenSettings.cellSize = this.cellSize;
+            navMeshGenSettings.partitionType = this.partitionType;
+            navMeshGenSettings.agentMaxSlope = this.agentMaxSlope;
+            navMeshGenSettings.detailSampleMaxError = this.detailSampleMaxError;
+            navMeshGenSettings.tileSizeX = this.tileSizeX;
+            return navMeshGenSettings;
         }
     }
 

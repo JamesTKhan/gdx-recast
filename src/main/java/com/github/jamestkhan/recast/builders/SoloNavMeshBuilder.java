@@ -17,7 +17,7 @@ freely, subject to the following restrictions:
 */
 package com.github.jamestkhan.recast.builders;
 
-import com.github.jamestkhan.recast.NavigationSettings;
+import com.github.jamestkhan.recast.NavMeshGenSettings;
 import com.github.jamestkhan.recast.geom.GdxInputGeomProvider;
 import org.recast4j.detour.MeshData;
 import org.recast4j.detour.NavMesh;
@@ -34,20 +34,20 @@ import java.util.List;
 
 public class SoloNavMeshBuilder extends AbstractNavMeshBuilder {
 
-    public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavigationSettings navigationSettings) {
+    public Tupple2<List<RecastBuilderResult>, NavMesh> build(GdxInputGeomProvider m_geom, NavMeshGenSettings navMeshGenSettings) {
 
-        RecastBuilderResult rcResult = buildRecastResult(m_geom, navigationSettings, true, true, true);
+        RecastBuilderResult rcResult = buildRecastResult(m_geom, navMeshGenSettings, true, true, true);
         return new Tupple2<>(Collections.singletonList(rcResult),
                 buildNavMesh(
-                        buildMeshData(m_geom, navigationSettings.cellSize, navigationSettings.cellHeight, navigationSettings.agentHeight, navigationSettings.agentRadius, navigationSettings.agentMaxClimb, rcResult),
-                        navigationSettings.maxVertsPerPoly));
+                        buildMeshData(m_geom, navMeshGenSettings.cellSize, navMeshGenSettings.cellHeight, navMeshGenSettings.agentHeight, navMeshGenSettings.agentRadius, navMeshGenSettings.agentMaxClimb, rcResult),
+                        navMeshGenSettings.maxVertsPerPoly));
     }
 
     private NavMesh buildNavMesh(MeshData meshData, int m_vertsPerPoly) {
         return new NavMesh(meshData, m_vertsPerPoly, 0);
     }
 
-    private RecastBuilderResult buildRecastResult(GdxInputGeomProvider m_geom, NavigationSettings settings, boolean filterLowHangingObstacles, boolean filterLedgeSpans,
+    private RecastBuilderResult buildRecastResult(GdxInputGeomProvider m_geom, NavMeshGenSettings settings, boolean filterLowHangingObstacles, boolean filterLedgeSpans,
                                                   boolean filterWalkableLowHeightSpans) {
 
         RecastConfig cfg = new RecastConfig(settings.partitionType, settings.cellSize, settings.cellHeight, settings.agentMaxSlope, filterLowHangingObstacles,

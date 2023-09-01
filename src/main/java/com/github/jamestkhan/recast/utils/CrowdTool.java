@@ -57,14 +57,12 @@ public class CrowdTool implements Tool {
     private float[] m_targetPos;
     private long m_targetRef;
 
-    public CrowdTool(NavMeshData navMeshData) {
+    public CrowdTool(NavMeshData navMeshData, CrowdConfig config) {
         this.navMeshData = navMeshData;
 
         NavMesh nav = navMeshData.getNavMesh();
         if (nav != null && m_nav != nav) {
             m_nav = nav;
-
-            CrowdConfig config = new CrowdConfig(navMeshData.getSettings().agentRadius);
 
             crowd = new Crowd(config, nav, __ -> new DefaultQueryFilter(SampleAreaModifications.SAMPLE_POLYFLAGS_ALL,
                     SampleAreaModifications.SAMPLE_POLYFLAGS_DISABLED, new float[] { 1f, 10f, 1f, 1f, 2f, 1.5f }));
@@ -108,9 +106,8 @@ public class CrowdTool implements Tool {
         crowd.removeAgent(agent);
     }
 
-    public CrowdAgent addAgent(float[] p) {
-        CrowdAgentParams ap = getAgentParams();
-        CrowdAgent ag = crowd.addAgent(p, ap);
+    public CrowdAgent addAgent(float[] p, CrowdAgentParams params) {
+        CrowdAgent ag = crowd.addAgent(p, params);
         if (ag != null) {
             if (m_targetRef != 0)
                 crowd.requestMoveTarget(ag, m_targetRef, m_targetPos);
@@ -126,27 +123,6 @@ public class CrowdTool implements Tool {
         }
 
         return ag;
-    }
-
-    private CrowdAgentParams getAgentParams() {
-        CrowdAgentParams ap = new CrowdAgentParams();
-        ap.radius = navMeshData.getSettings().agentRadius;
-        ap.height = navMeshData.getSettings().agentHeight;
-        ap.maxAcceleration = 8.0f;
-        ap.maxSpeed = 3.5f;
-        ap.collisionQueryRange = ap.radius * 12.0f;
-        ap.pathOptimizationRange = ap.radius * 30.0f;
-        ap.updateFlags = getUpdateFlags();
-
-        // TODO make this configurable?
-
-        // The index of the avoidance configuration to use for the agent.
-        // [Limits: 0 <= value <= #DT_CROWD_MAX_OBSTAVOIDANCE_PARAMS]
-        ap.obstacleAvoidanceType = 3;
-
-        // How aggresive the agent manager should be at avoiding collisions with this agent. [Limit: >= 0]
-        ap.separationWeight = 2f;
-        return ap;
     }
 
     public void setMoveTarget(CrowdAgent agent, float[] p) {
@@ -198,57 +174,8 @@ public class CrowdTool implements Tool {
         // m_crowdSampleCount.addSample((float) crowd.getVelocitySampleCount());
     }
 
-    private void updateAgentParams() {
-        if (crowd == null) {
-            return;
-        }
-
-        int updateFlags = getUpdateFlags();
-       // profilingTool.updateAgentParams(updateFlags, toolParams.m_obstacleAvoidanceType.get(0), toolParams.m_separationWeight.get(0));
-        for (CrowdAgent ag : crowd.getActiveAgents()) {
-            CrowdAgentParams params = new CrowdAgentParams();
-            params.radius = ag.params.radius;
-            params.height = ag.params.height;
-            params.maxAcceleration = ag.params.maxAcceleration;
-            params.maxSpeed = ag.params.maxSpeed;
-            params.collisionQueryRange = ag.params.collisionQueryRange;
-            params.pathOptimizationRange = ag.params.pathOptimizationRange;
-            params.obstacleAvoidanceType = ag.params.obstacleAvoidanceType;
-            params.queryFilterType = ag.params.queryFilterType;
-            params.userData = ag.params.userData;
-            params.updateFlags = updateFlags;
-            // TODO make this configurable?
-
-            // The index of the avoidance configuration to use for the agent.
-            // [Limits: 0 <= value <= #DT_CROWD_MAX_OBSTAVOIDANCE_PARAMS]
-            params.obstacleAvoidanceType = 3;
-
-            // How aggresive the agent manager should be at avoiding collisions with this agent. [Limit: >= 0]
-            params.separationWeight = 2f;
-            crowd.updateAgentParameters(ag, params);
-        }
-    }
-
-    private int getUpdateFlags() {
-        //TODO Make this configurable, for now it uses all flags
-//        int updateFlags = 0;
-//        if (toolParams.m_anticipateTurns) {
-//            updateFlags |= CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS;
-//        }
-//        if (toolParams.m_optimizeVis) {
-//            updateFlags |= CrowdAgentParams.DT_CROWD_OPTIMIZE_VIS;
-//        }
-//        if (toolParams.m_optimizeTopo) {
-//            updateFlags |= CrowdAgentParams.DT_CROWD_OPTIMIZE_TOPO;
-//        }
-//        if (toolParams.m_obstacleAvoidance) {
-//            updateFlags |= CrowdAgentParams.DT_CROWD_OBSTACLE_AVOIDANCE;
-//        }
-//        if (toolParams.m_separation) {
-//            updateFlags |= CrowdAgentParams.DT_CROWD_SEPARATION;
-//        }
-//        return updateFlags;
-        return CrowdAgentParams.DT_CROWD_OBSTACLE_AVOIDANCE | CrowdAgentParams.DT_CROWD_SEPARATION | CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS | CrowdAgentParams.DT_CROWD_OPTIMIZE_TOPO | CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS;
+    public Crowd getCrowd() {
+        return crowd;
     }
 
 }

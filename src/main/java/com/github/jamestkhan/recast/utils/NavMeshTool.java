@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.github.jamestkhan.recast.NavMeshData;
+import com.github.jamestkhan.recast.PathFinderSettings;
 import com.github.jamestkhan.recast.builders.SampleAreaModifications;
 import org.recast4j.detour.DefaultQueryFilter;
 import org.recast4j.detour.DetourCommon;
@@ -28,6 +29,7 @@ import static org.recast4j.detour.DetourCommon.vMad;
 public class NavMeshTool implements Tool {
     private final DefaultQueryFilter queryFilter;
     private final NavMeshData navMeshData;
+    private final PathFinderSettings settings;
 
     private boolean startPosSet;
     private boolean endPosSet;
@@ -37,10 +39,15 @@ public class NavMeshTool implements Tool {
     private final float[] m_polyPickExt = new float[] { 2, 4, 2 };
     private boolean enableRaycast = true;
 
-    public NavMeshTool(NavMeshData sample) {
+    public NavMeshTool(PathFinderSettings settings, NavMeshData sample) {
         this.navMeshData = sample;
+        this.settings = settings;
         queryFilter = new DefaultQueryFilter(SampleAreaModifications.SAMPLE_POLYFLAGS_ALL,
                 SampleAreaModifications.SAMPLE_POLYFLAGS_DISABLED, new float[] { 1f, 1f, 1f, 1f, 2f, 1.5f });
+    }
+
+    public PathFinderSettings getSettings() {
+        return settings;
     }
 
     public void setPositions(Vector3 start, Vector3 end) {
@@ -77,8 +84,8 @@ public class NavMeshTool implements Tool {
             float[] targetPos = m_navQuery.closestPointOnPoly(polys.get(polys.size() - 1), endPos).result
                     .getClosest();
 
-            int maxIterations = navMeshData.getSettings().maxIterations;
-            float stepSize = navMeshData.getSettings().stepSize;
+            int maxIterations = settings.getMaxIterations();
+            float stepSize = settings.getStepSize();
             float SLOP = 0.1f;
 
             pathOut.add(iterPos);
