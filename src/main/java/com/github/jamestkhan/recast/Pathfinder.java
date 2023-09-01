@@ -133,6 +133,10 @@ public class Pathfinder {
         return navMeshData.getNavMesh();
     }
 
+    public void setNavMesh(NavMesh navMesh) {
+        navMeshData.update(navMeshData.getInputGeom(), null, navMesh);
+    }
+
     /**
      * Get a path from the start position to the end position
      *
