@@ -79,6 +79,15 @@ public class NavMeshGenerator {
     }
 
     /**
+     * Provide your own GdxInputGeomProvider.
+     * Useful if you want to provide vertices and indices yourself.
+     * @param provider the provider to use
+     */
+    public NavMeshGenerator(GdxInputGeomProvider provider)  {
+        geom = provider;
+    }
+
+    /**
      * Build the NavMesh
      * @param settings the settings to use for building the navmesh
      * @return the navmesh data, contains the input geometry, build results, and navmesh

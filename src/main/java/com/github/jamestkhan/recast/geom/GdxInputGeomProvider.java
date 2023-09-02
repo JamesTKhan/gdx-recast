@@ -42,6 +42,12 @@ public class GdxInputGeomProvider implements InputGeomProvider {
     final List<DemoOffMeshConnection> offMeshConnections = new ArrayList<>();
     final ChunkyTriMesh chunkyTriMesh;
 
+    /**
+     * The vertices must only contain x,y,z position information, all other data (normals, uvs, etc) must
+     * be stripped out prior to calling this constructor.
+     * @param vertexPositions the positional xyz vertices of the mesh
+     * @param meshFaces The indices of the vertices that make up each triangle
+     */
     public GdxInputGeomProvider(Array<Float> vertexPositions, Array<Integer> meshFaces) {
         this(mapVertices(vertexPositions), mapFaces(meshFaces));
     }
@@ -62,6 +68,12 @@ public class GdxInputGeomProvider implements InputGeomProvider {
         return vertices;
     }
 
+    /**
+     * The vertices must only contain x,y,z position information, all other data (normals, uvs, etc) must
+     * be stripped out prior to passing the vertices.
+     * @param vertices the positional xyz vertices of the mesh
+     * @param faces the indices of the vertices that make up each triangle
+     */
     public GdxInputGeomProvider(float[] vertices, int[] faces) {
         this.vertices = vertices;
         this.faces = faces;
