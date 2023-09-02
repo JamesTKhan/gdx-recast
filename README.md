@@ -21,10 +21,10 @@ NavMeshData data = navMeshGenerator.build(settings); // Contains NavMesh
 ### Saving / loading a generated NavMesh
 ```java
 // Saving
-NavMeshIO.save(navMeshData.getNavMesh(), Gdx.files.local("navmesh.nav"));
+NavMeshIO.save(navMeshData.getNavMesh(), Gdx.files.internal("navmesh.nav"));
 
 // Loading
-NavMesh navMesh = NavMeshIO.load(Gdx.files.local("navmesh.nav"));
+NavMesh navMesh = NavMeshIO.load(Gdx.files.internal("navmesh.nav"));
 NavMeshData navMeshData = new NavMeshData(navMesh);
 ```
 
