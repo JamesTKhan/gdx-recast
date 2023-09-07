@@ -1,3 +1,5 @@
+![image](https://github.com/JamesTKhan/gdx-recast/assets/10563814/4b6bfba4-6832-4a97-ad9f-51405d7d83c9)
+
 # gdx-recast
 gdx-recast is a library for libGDX that provides a bridge between libGDX and the Recast/Detour pathfinding libraries.
 This is possible by using [recast4j](https://github.com/ppiastucki/recast4j), a Java port of Recast/Detour.
