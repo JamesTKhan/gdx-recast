@@ -6,6 +6,8 @@ This is possible by using [recast4j](https://github.com/ppiastucki/recast4j), a 
 
 GWT is supported by using a forked version of recast4j, [gwt-recast](https://github.com/antzGames/gwt-recast4j) which has been modified to work with GWT.
 
+NOTE: This library is still in development. API changes may occur at any time.
+
 ## Usage
 
 ### Generating a NavMesh
@@ -20,6 +22,7 @@ NavMeshGenSettings settings = NavMeshGenSettings.Builder.SettingsBuilder()
 NavMeshGenerator navMeshGenerator = new NavMeshGenerator(modelInstance);
 NavMeshData data = navMeshGenerator.build(settings); // Contains NavMesh
 ```
+
 ### Saving / loading a generated NavMesh
 ```java
 // Saving
