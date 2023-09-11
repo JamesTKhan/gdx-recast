@@ -39,3 +39,8 @@ pathfinder = new Pathfinder(navMeshData);
 Array<float[]> paths = new Array<>(); // This will be populated with the path
 pathfinder.getPath(new Vector3(-0.99f, 15.24f, 11.98f), new Vector3(17.63f,-2.37f,-21.86f), paths);
 ```
+
+# Resources
+[Recast Navigation Google Group](https://groups.google.com/g/recastnavigation)
+
+[Recast4j](https://github.com/ppiastucki/recast4j)
