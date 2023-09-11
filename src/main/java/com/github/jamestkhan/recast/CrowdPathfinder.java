@@ -11,7 +11,6 @@ import org.recast4j.detour.crowd.CrowdConfig;
  * @version August 29, 2022
  */
 public class CrowdPathfinder extends Pathfinder {
-    private final float[] tmpPos = new float[3];
     private CrowdTool tool;
 
     public CrowdPathfinder(NavMeshData navMeshData, CrowdConfig crowdConfig) {
