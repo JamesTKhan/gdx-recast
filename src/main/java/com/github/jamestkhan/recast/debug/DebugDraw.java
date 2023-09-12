@@ -160,7 +160,7 @@ public class DebugDraw {
     public void renderStartPos(float x, float y, float z) {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.circle( x, y + 2.1f, z, 2f, 360);
+        renderBoxCentered(x, y, z, 2f, 2f, 2f);
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
     }
 
@@ -171,7 +171,7 @@ public class DebugDraw {
     public void renderEndPos(float x, float y, float z) {
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.circle( x, y + 2.1f, z, 2f, 360);
+        renderBoxCentered(x, y, z, 2f, 2f, 2f);
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
     }
 
@@ -200,6 +200,12 @@ public class DebugDraw {
 
     private void renderLine(float x1, float y1, float z1, float x2, float y2, float z2, float offset) {
         shapeRenderer.line(x1 + offset, y1 + 0.5f, z1 + offset, x2 + offset, y2 + 0.5f, z2 + offset);
+    }
+
+    private void renderBoxCentered(float x, float y, float z, float width, float height, float depth) {
+        float halfWidth = width / 2.0f;
+        float halfDepth = depth / 2.0f;
+        shapeRenderer.box(x - halfWidth, y, z + halfDepth, width, height, depth);
     }
 
 }
