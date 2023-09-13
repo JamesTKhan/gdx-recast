@@ -56,7 +56,10 @@ public class CrowdPathfinder extends Pathfinder {
         ap.maxSpeed = 3.5f;
         ap.collisionQueryRange = ap.radius * 12.0f;
         ap.pathOptimizationRange = ap.radius * 30.0f;
-        ap.updateFlags = CrowdAgentParams.DT_CROWD_OBSTACLE_AVOIDANCE | CrowdAgentParams.DT_CROWD_SEPARATION | CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS | CrowdAgentParams.DT_CROWD_OPTIMIZE_TOPO | CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS;
+        ap.updateFlags = CrowdAgentParams.DT_CROWD_OBSTACLE_AVOIDANCE
+                | CrowdAgentParams.DT_CROWD_SEPARATION
+                | CrowdAgentParams.DT_CROWD_ANTICIPATE_TURNS
+                | CrowdAgentParams.DT_CROWD_OPTIMIZE_TOPO;
 
         // The index of the avoidance configuration to use for the agent.
         // [Limits: 0 <= value <= #DT_CROWD_MAX_OBSTAVOIDANCE_PARAMS]
