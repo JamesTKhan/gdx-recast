@@ -21,7 +21,6 @@ package com.github.jamestkhan.recast.utils;
 import com.github.jamestkhan.recast.NavMeshData;
 import com.github.jamestkhan.recast.builders.SampleAreaModifications;
 import org.recast4j.detour.DefaultQueryFilter;
-import org.recast4j.detour.DetourCommon;
 import org.recast4j.detour.FindNearestPolyResult;
 import org.recast4j.detour.NavMesh;
 import org.recast4j.detour.NavMeshQuery;
@@ -33,36 +32,22 @@ import org.recast4j.detour.crowd.CrowdAgentParams;
 import org.recast4j.detour.crowd.CrowdConfig;
 import org.recast4j.detour.crowd.ObstacleAvoidanceQuery;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class CrowdTool implements Tool {
     private final NavMeshData navMeshData;
-    private NavMesh m_nav;
+    private NavMesh navMesh;
     private Crowd crowd;
-    private static final int AGENT_MAX_TRAIL = 64;
 
     @Override
     public NavMesh getNavMesh() {
         return navMeshData.getNavMesh();
     }
 
-    private class AgentTrail {
-        float[] trail = new float[AGENT_MAX_TRAIL * 3];
-        int htrail;
-    }
-
-    private final Map<Long, AgentTrail> m_trails = new HashMap<>();
-    private float[] m_targetPos;
-    private long m_targetRef;
-
     public CrowdTool(NavMeshData navMeshData, CrowdConfig config) {
         this.navMeshData = navMeshData;
 
         NavMesh nav = navMeshData.getNavMesh();
-        if (nav != null && m_nav != nav) {
-            m_nav = nav;
+        if (nav != null && navMesh != nav) {
+            navMesh = nav;
 
             crowd = new Crowd(config, nav, __ -> new DefaultQueryFilter(SampleAreaModifications.SAMPLE_POLYFLAGS_ALL,
                     SampleAreaModifications.SAMPLE_POLYFLAGS_DISABLED, new float[] { 1f, 10f, 1f, 1f, 2f, 1.5f }));
@@ -107,22 +92,7 @@ public class CrowdTool implements Tool {
     }
 
     public CrowdAgent addAgent(float[] p, CrowdAgentParams params) {
-        CrowdAgent ag = crowd.addAgent(p, params);
-        if (ag != null) {
-            if (m_targetRef != 0)
-                crowd.requestMoveTarget(ag, m_targetRef, m_targetPos);
-
-            // Init trail
-            AgentTrail trail = m_trails.computeIfAbsent(ag.idx, __ -> new AgentTrail());
-            for (int i = 0; i < AGENT_MAX_TRAIL; ++i) {
-                trail.trail[i * 3] = p[0];
-                trail.trail[i * 3 + 1] = p[1];
-                trail.trail[i * 3 + 2] = p[2];
-            }
-            trail.htrail = 0;
-        }
-
-        return ag;
+        return crowd.addAgent(p, params);
     }
 
     public void setMoveTarget(CrowdAgent agent, float[] p) {
@@ -134,44 +104,22 @@ public class CrowdTool implements Tool {
         float[] halfExtents = crowd.getQueryExtents();
 
         Result<FindNearestPolyResult> result = navquery.findNearestPoly(p, halfExtents, filter);
-        m_targetRef = result.result.getNearestRef();
-        m_targetPos = result.result.getNearestPos();
-        crowd.requestMoveTarget(agent, m_targetRef, m_targetPos);
+        long targetRef = result.result.getNearestRef();
+        float[] targetPos = result.result.getNearestPos();
+        crowd.requestMoveTarget(agent, targetRef, targetPos);
     }
 
-    private float[] calcVel(float[] pos, float[] tgt, float speed) {
-        float[] vel = DetourCommon.vSub(tgt, pos);
-        vel[1] = 0.0f;
-        DetourCommon.vNormalize(vel);
-        return DetourCommon.vScale(vel, speed);
-    }
-
-    public void update(float dt) {
-        updateTick(dt);
+    public void update(float deltaTime) {
+        updateTick(deltaTime);
     }
 
     private void updateTick(float dt) {
-        if (crowd == null)
-            return;
+        if (crowd == null) return;
+
         NavMesh nav = navMeshData.getNavMesh();
-        if (nav == null)
-            return;
+        if (nav == null) return;
 
         crowd.update(dt, null);
-
-        // Update agent trails
-        for (CrowdAgent ag : crowd.getActiveAgents()) {
-            AgentTrail trail = m_trails.get(ag.idx);
-            // Update agent movement trail.
-            trail.htrail = (trail.htrail + 1) % AGENT_MAX_TRAIL;
-            trail.trail[trail.htrail * 3] = ag.npos[0];
-            trail.trail[trail.htrail * 3 + 1] = ag.npos[1];
-            trail.trail[trail.htrail * 3 + 2] = ag.npos[2];
-        }
-
-//        m_agentDebug.vod.normalizeSamples();
-
-        // m_crowdSampleCount.addSample((float) crowd.getVelocitySampleCount());
     }
 
     public Crowd getCrowd() {

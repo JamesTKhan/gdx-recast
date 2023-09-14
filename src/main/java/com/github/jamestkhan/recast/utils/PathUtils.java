@@ -18,6 +18,7 @@ freely, subject to the following restrictions:
 */
 package com.github.jamestkhan.recast.utils;
 
+import com.badlogic.gdx.math.Vector3;
 import org.recast4j.detour.Link;
 import org.recast4j.detour.MeshTile;
 import org.recast4j.detour.NavMesh;
@@ -187,6 +188,15 @@ public class PathUtils {
             return shortcut;
         }
         return path;
+    }
+
+    /**
+     * Copy the values from the vector to the array
+     */
+    public static void vectorToFloatArray(Vector3 vec, float[] arr) {
+        arr[0] = vec.x;
+        arr[1] = vec.y;
+        arr[2] = vec.z;
     }
 
 }

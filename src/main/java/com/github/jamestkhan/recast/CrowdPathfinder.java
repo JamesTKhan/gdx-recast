@@ -6,6 +6,8 @@ import org.recast4j.detour.crowd.CrowdAgent;
 import org.recast4j.detour.crowd.CrowdAgentParams;
 import org.recast4j.detour.crowd.CrowdConfig;
 
+import static com.github.jamestkhan.recast.utils.PathUtils.vectorToFloatArray;
+
 /**
  * @author JamesTKhan
  * @version August 29, 2022
@@ -22,17 +24,33 @@ public class CrowdPathfinder extends Pathfinder {
         tool.update(deltaTime);
     }
 
-    public CrowdAgent addAgent(Vector3 currentPosition, CrowdAgentParams params) {
-        tmpPos[0] = currentPosition.x;
-        tmpPos[1] = currentPosition.y;
-        tmpPos[2] = currentPosition.z;
+    /**
+     * Add a new agent to the crowd.
+     * @param position the position of the age
+     * @param params the params to use for the agent
+     * @return the agent that was added
+     */
+    public CrowdAgent addAgent(Vector3 position, CrowdAgentParams params) {
+        vectorToFloatArray(position, tmpPos);
         return tool.addAgent(tmpPos, params);
     }
 
+    /**
+     * Add a new agent to the crowd and set its move target.
+     * @param position the position of the agent
+     * @param target the target of the agent
+     * @param params the params to use for the agent
+     * @return the agent that was added
+     */
+    public CrowdAgent addAgent(Vector3 position, Vector3 target, CrowdAgentParams params) {
+        CrowdAgent ag = addAgent(position, params);
+        if (ag == null) return null;
+        setAgentMoveTarget(ag, target);
+        return ag;
+    }
+
     public void setAgentMoveTarget(CrowdAgent crowdAgent, Vector3 moveTarget) {
-        tmpPos[0] = moveTarget.x;
-        tmpPos[1] = moveTarget.y;
-        tmpPos[2] = moveTarget.z;
+        vectorToFloatArray(moveTarget, tmpPos);
         tool.setMoveTarget(crowdAgent, tmpPos);
     }
 

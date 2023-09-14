@@ -8,6 +8,8 @@ import org.recast4j.detour.NavMesh;
 import org.recast4j.detour.QueryFilter;
 import org.recast4j.detour.Result;
 
+import static com.github.jamestkhan.recast.utils.PathUtils.vectorToFloatArray;
+
 /**
  * Entry point for gdx-recast.
  *
@@ -84,14 +86,5 @@ public class Pathfinder {
 
     public PathFinderSettings getSettings() {
         return tool.getSettings();
-    }
-
-    /**
-     * Copy the values from the vector to the array
-     */
-    private void vectorToFloatArray(Vector3 vec, float[] arr) {
-        arr[0] = vec.x;
-        arr[1] = vec.y;
-        arr[2] = vec.z;
     }
 }
