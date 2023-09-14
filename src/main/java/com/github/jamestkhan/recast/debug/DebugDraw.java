@@ -135,10 +135,11 @@ public class DebugDraw {
     public void drawCrowdAgents(Array<CrowdAgent> crowdAgents) {
         shapeRenderer.setColor(Color.FOREST);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+
         for (CrowdAgent agent : crowdAgents) {
-            //shapeRenderer.circle(agent.npos[0], agent.npos[1], agent.npos[2], agent.params.radius);
             float radius = agent.params.radius;
-            shapeRenderer.box(agent.npos[0], agent.npos[1], agent.npos[2], radius, radius, radius);
+            float height = agent.params.height;
+            shapeRenderer.box(agent.npos[0], agent.npos[1], agent.npos[2], radius, height, radius);
         }
     }
 
