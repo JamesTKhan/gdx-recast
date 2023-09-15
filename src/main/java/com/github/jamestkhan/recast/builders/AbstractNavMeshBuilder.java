@@ -1,7 +1,7 @@
 package com.github.jamestkhan.recast.builders;
 
 import com.github.jamestkhan.recast.geom.GdxInputGeomProvider;
-import com.github.jamestkhan.recast.geom.DemoOffMeshConnection;
+import com.github.jamestkhan.recast.geom.OffMeshConnection;
 import org.recast4j.detour.MeshData;
 import org.recast4j.detour.NavMeshDataCreateParams;
 import org.recast4j.recast.PolyMesh;
@@ -50,7 +50,7 @@ public abstract class AbstractNavMeshBuilder {
         params.offMeshConFlags = new int[params.offMeshConCount];
         params.offMeshConUserID = new int[params.offMeshConCount];
         for (int i = 0; i < params.offMeshConCount; i++) {
-            DemoOffMeshConnection offMeshCon = m_geom.getOffMeshConnections().get(i);
+            OffMeshConnection offMeshCon = m_geom.getOffMeshConnections().get(i);
             for (int j = 0; j < 6; j++) {
                 params.offMeshConVerts[6 * i + j] = offMeshCon.verts[j];
             }

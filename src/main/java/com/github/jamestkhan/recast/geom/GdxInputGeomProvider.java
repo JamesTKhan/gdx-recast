@@ -39,7 +39,7 @@ public class GdxInputGeomProvider implements InputGeomProvider {
     final float[] bmin;
     final float[] bmax;
     final List<ConvexVolume> convexVolumes = new ArrayList<>();
-    final List<DemoOffMeshConnection> offMeshConnections = new ArrayList<>();
+    final List<OffMeshConnection> offMeshConnections = new ArrayList<>();
     final ChunkyTriMesh chunkyTriMesh;
 
     /**
@@ -138,15 +138,15 @@ public class GdxInputGeomProvider implements InputGeomProvider {
         return Collections.singletonList(new TriMesh(vertices, faces));
     }
 
-    public List<DemoOffMeshConnection> getOffMeshConnections() {
+    public List<OffMeshConnection> getOffMeshConnections() {
         return offMeshConnections;
     }
 
     public void addOffMeshConnection(float[] start, float[] end, float radius, boolean bidir, int area, int flags) {
-        offMeshConnections.add(new DemoOffMeshConnection(start, end, radius, bidir, area, flags));
+        offMeshConnections.add(new OffMeshConnection(start, end, radius, bidir, area, flags));
     }
 
-    public void removeOffMeshConnections(Predicate<DemoOffMeshConnection> filter) {
+    public void removeOffMeshConnections(Predicate<OffMeshConnection> filter) {
         offMeshConnections.retainAll(offMeshConnections.stream().filter(c -> !filter.test(c)).collect(toList()));
     }
 

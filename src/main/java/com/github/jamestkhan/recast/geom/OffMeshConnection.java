@@ -18,7 +18,7 @@ freely, subject to the following restrictions:
 */
 package com.github.jamestkhan.recast.geom;
 
-public class DemoOffMeshConnection {
+public class OffMeshConnection {
 
     public final float[] verts;
     public final float radius;
@@ -26,7 +26,7 @@ public class DemoOffMeshConnection {
     public final int area;
     public final int flags;
 
-    public DemoOffMeshConnection(float[] start, float[] end, float radius, boolean bidir, int area, int flags) {
+    public OffMeshConnection(float[] start, float[] end, float radius, boolean bidir, int area, int flags) {
         verts = new float[6];
         verts[0] = start[0];
         verts[1] = start[1];
