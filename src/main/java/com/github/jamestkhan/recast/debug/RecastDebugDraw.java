@@ -28,7 +28,7 @@ import org.recast4j.detour.crowd.CrowdAgent;
  * @author JamesTKhan
  * @version August 21, 2022
  */
-public class DebugDraw {
+public class RecastDebugDraw {
 
     public final CustomShapeRenderer shapeRenderer;
     private final Array<Float> vertices = new Array<>();
@@ -53,7 +53,7 @@ public class DebugDraw {
     private Material lineMaterial;
     private Material meshMaterial;
 
-    public DebugDraw(Camera camera) {
+    public RecastDebugDraw(Camera camera) {
         cam = camera;
         shapeRenderer = new CustomShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
