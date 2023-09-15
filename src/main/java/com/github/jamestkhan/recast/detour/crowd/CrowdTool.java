@@ -16,10 +16,11 @@ freely, subject to the following restrictions:
  misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
-package com.github.jamestkhan.recast.utils;
+package com.github.jamestkhan.recast.detour.crowd;
 
 import com.github.jamestkhan.recast.NavMeshData;
 import com.github.jamestkhan.recast.builders.SampleAreaModifications;
+import com.github.jamestkhan.recast.utils.Tool;
 import org.recast4j.detour.DefaultQueryFilter;
 import org.recast4j.detour.FindNearestPolyResult;
 import org.recast4j.detour.NavMesh;

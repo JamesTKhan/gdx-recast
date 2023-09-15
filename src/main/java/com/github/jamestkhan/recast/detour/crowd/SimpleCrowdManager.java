@@ -1,7 +1,7 @@
-package com.github.jamestkhan.recast;
+package com.github.jamestkhan.recast.detour.crowd;
 
 import com.badlogic.gdx.math.Vector3;
-import com.github.jamestkhan.recast.utils.CrowdTool;
+import com.github.jamestkhan.recast.NavMeshData;
 import org.recast4j.detour.crowd.CrowdAgent;
 import org.recast4j.detour.crowd.CrowdAgentParams;
 import org.recast4j.detour.crowd.CrowdConfig;
@@ -9,14 +9,15 @@ import org.recast4j.detour.crowd.CrowdConfig;
 import static com.github.jamestkhan.recast.utils.PathUtils.vectorToFloatArray;
 
 /**
+ * A simple implementation of a CrowdManager.
  * @author JamesTKhan
  * @version August 29, 2022
  */
-public class CrowdPathfinder extends Pathfinder {
-    private CrowdTool tool;
+public class SimpleCrowdManager implements CrowdManager {
+    protected CrowdTool tool;
+    protected final float[] tmpPos = new float[3];
 
-    public CrowdPathfinder(NavMeshData navMeshData, CrowdConfig crowdConfig) {
-        super(navMeshData);
+    public SimpleCrowdManager(NavMeshData navMeshData, CrowdConfig crowdConfig) {
         tool = new CrowdTool(navMeshData, crowdConfig);
     }
 
@@ -24,24 +25,11 @@ public class CrowdPathfinder extends Pathfinder {
         tool.update(deltaTime);
     }
 
-    /**
-     * Add a new agent to the crowd.
-     * @param position the position of the age
-     * @param params the params to use for the agent
-     * @return the agent that was added
-     */
     public CrowdAgent addAgent(Vector3 position, CrowdAgentParams params) {
         vectorToFloatArray(position, tmpPos);
         return tool.addAgent(tmpPos, params);
     }
 
-    /**
-     * Add a new agent to the crowd and set its move target.
-     * @param position the position of the agent
-     * @param target the target of the agent
-     * @param params the params to use for the agent
-     * @return the agent that was added
-     */
     public CrowdAgent addAgent(Vector3 position, Vector3 target, CrowdAgentParams params) {
         CrowdAgent ag = addAgent(position, params);
         if (ag == null) return null;
@@ -49,9 +37,9 @@ public class CrowdPathfinder extends Pathfinder {
         return ag;
     }
 
-    public void setAgentMoveTarget(CrowdAgent crowdAgent, Vector3 moveTarget) {
+    public void setAgentMoveTarget(CrowdAgent agent, Vector3 moveTarget) {
         vectorToFloatArray(moveTarget, tmpPos);
-        tool.setMoveTarget(crowdAgent, tmpPos);
+        tool.setMoveTarget(agent, tmpPos);
     }
 
     public void removeAgent(CrowdAgent agent) {
