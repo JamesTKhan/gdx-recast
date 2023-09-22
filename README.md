@@ -9,7 +9,7 @@ GWT is supported by using a forked version of recast4j, [gwt-recast](https://git
 NOTE: This library is still in development. API changes may occur at any time.
 
 ## Features
-- NavMesh generation
+- NavMesh generation (can use libGDX ModelInstances)
 - NavMesh saving / loading
 - Pathfinding
 - Detour Crowd (Experimental)
