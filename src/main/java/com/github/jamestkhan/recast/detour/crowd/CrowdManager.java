@@ -1,6 +1,7 @@
 package com.github.jamestkhan.recast.detour.crowd;
 
 import com.badlogic.gdx.math.Vector3;
+import org.recast4j.detour.crowd.Crowd;
 import org.recast4j.detour.crowd.CrowdAgent;
 import org.recast4j.detour.crowd.CrowdAgentParams;
 
@@ -46,4 +47,10 @@ public interface CrowdManager {
      * @param agent the agent to remove
      */
     void removeAgent(CrowdAgent agent);
+
+    /**
+     * Returns the underlying recast4j Crowd class
+     * @return the crowd
+     */
+    Crowd getCrowd();
 }
