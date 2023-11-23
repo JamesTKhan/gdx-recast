@@ -123,7 +123,7 @@ public class NavMeshGenerator {
             int offset = vertexAttributes.getOffset(VertexAttributes.Usage.Position);
 
             int vertexSize = mesh.getVertexSize() / 4;
-            int vertCount = mesh.getNumVertices() * mesh.getVertexSize() / 4;
+            int vertCount = mesh.getNumVertices() * vertexSize;
 
             float[] vertices = new float[vertCount];
             short[] indices = new short[mesh.getNumIndices()];
